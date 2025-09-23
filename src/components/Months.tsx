@@ -1,7 +1,9 @@
 import * as d3 from 'd3'
 import { useMemo } from 'react'
 import { useSvgContext } from '../hooks/useSvgContext'
+import type { ArcMonth } from '../types'
 import { calculateRadius } from '../utils'
+import { Month } from './Month'
 
 const months = [
   { name: 'January', days: 31 },
@@ -22,7 +24,7 @@ export function Months() {
   const { size } = useSvgContext()
   const radius = calculateRadius(size)
 
-  const arcs = useMemo(() => {
+  const arcMonthList = useMemo<ArcMonth[]>(() => {
     const totalDays = 365
     let startAngle = 0
 
@@ -35,14 +37,14 @@ export function Months() {
         endAngle,
       }) as string
       startAngle = endAngle
-      return arc
+      return { ...month, arc }
     })
   }, [radius])
 
   return (
     <>
-      {arcs.map((arc, index) => (
-        <path key={index} d={arc} fill="transparent" stroke="black" />
+      {arcMonthList.map((month, index) => (
+        <Month key={index} month={month} />
       ))}
     </>
   )

@@ -1,6 +1,6 @@
 import { type ReactNode, type RefObject } from 'react'
 import { svgContext } from '../hooks/useSvgContext'
-import { useWindowSize } from '../hooks/useMinWindowSize'
+import { useWindowSize } from '../hooks/useWindowSize'
 
 interface SvgContainerProps {
   children: ReactNode

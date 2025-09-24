@@ -8,7 +8,6 @@ import type { BoundingBox, Centroid } from './types'
 
 function App() {
   const [transform, setTransform] = useState('')
-  const [transformOrigin, setTransformOrigin] = useState('')
   const { width, height, minSize } = useWindowSize()
   const svgRef = useRef<SVGSVGElement>(null)
 
@@ -19,29 +18,25 @@ function App() {
     const scale =
       Math.min(width / boundingBox.width, height / boundingBox.height) * 0.8
 
-    const originX = centroid.x - svgRect.x - width / 2
-    const originY = centroid.y - svgRect.y - height / 2
+    const translateX =
+      -svgRect.x + scale * (svgRect.x + width / 2 - centroid.x)
+    const translateY =
+      -svgRect.y + scale * (svgRect.y + height / 2 - centroid.y)
 
-    const translateX = width / 2 - centroid.x
-    const translateY = height / 2 - centroid.y
-
-    setTransformOrigin(`${originX}px ${originY}px`)
     setTransform(`translate(${translateX}px, ${translateY}px) scale(${scale})`)
   }
 
   const resetZoom = () => {
     setTransform('')
-    setTransformOrigin('')
   }
 
   return (
     <main className="relative h-screen w-full">
       <SvgContainer svgRef={svgRef} size={minSize}>
         <g
+          className="transition-transform duration-700"
           style={{
             transform,
-            transformOrigin,
-            transition: 'transform 0.5s',
           }}
         >
           <YearCircle />

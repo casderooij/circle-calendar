@@ -1,7 +1,7 @@
 import * as d3 from 'd3'
 import { useMemo } from 'react'
 import { useSvgContext } from '../hooks/useSvgContext'
-import type { ArcMonth } from '../types'
+import type { ArcMonth, BoundingBox, Centroid } from '../types'
 import { calculateRadius } from '../utils'
 import { Month } from './Month'
 
@@ -20,7 +20,11 @@ const months = [
   { name: 'December', days: 31 },
 ]
 
-export function Months() {
+interface MonthsProps {
+  onMonthClick: (boundingBox: BoundingBox, centroid: Centroid) => void
+}
+
+export function Months({ onMonthClick }: MonthsProps) {
   const { size } = useSvgContext()
   const radius = calculateRadius(size)
 
@@ -44,7 +48,7 @@ export function Months() {
   return (
     <>
       {arcMonthList.map((month, index) => (
-        <Month key={index} month={month} />
+        <Month key={index} month={month} onMonthClick={onMonthClick} />
       ))}
     </>
   )

@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 
-export function useMinWindowSize() {
-  const [size, setSize] = useState(0)
+export function useWindowSize() {
+  const [size, setSize] = useState({ width: 0, height: 0, minSize: 0 })
 
   useEffect(() => {
     function checkWindowSize() {
       const width = window.innerWidth
       const height = window.innerHeight
 
-      setSize(Math.min(width, height))
+      setSize({ width, height, minSize: Math.min(width, height) })
     }
 
     checkWindowSize()

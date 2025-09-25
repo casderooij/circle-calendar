@@ -16,8 +16,8 @@ function App() {
     if (!svgRef.current) return
 
     const svgRect = svgRef.current.getBoundingClientRect()
-    const scale =
-      Math.min(width / boundingBox.width, height / boundingBox.height) * 0.8
+    const scale = 2
+    // Math.min(width / boundingBox.width, height / boundingBox.height) * 0.8
 
     const x = -svgRect.x + scale * (svgRect.x + width / 2 - centroid.x)
     const y = -svgRect.y + scale * (svgRect.y + height / 2 - centroid.y)
